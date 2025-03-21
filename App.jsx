@@ -7,11 +7,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from './src/screens/HomeScreen';
 import SearchScreen from './src/screens/SearchScreen';
 import CollectionScreen from './src/screens/CollectionScreen';
 import LikeScreen from './src/screens/LikeScreen';
 import LinearGradient from 'react-native-linear-gradient';
+import HomeStack from './src/navigation/MyStackNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -56,8 +56,8 @@ const App = () => {
           tabBarInactiveTintColor: '#CCCCCC',
         }}>
         <Tab.Screen
-          name="Home"
-          component={HomeScreen}
+          name="HomeStack"
+          component={HomeStack}
           options={{
             tabBarIcon: ({color, focused, size}) => {
               return (

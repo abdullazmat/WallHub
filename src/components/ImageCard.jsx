@@ -1,11 +1,16 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 
 const ImageCard = ({item}) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('WallPaperScreen', {item})}
+      style={styles.container}>
       <Image
         style={styles.coverImage}
         source={{
@@ -20,7 +25,7 @@ const ImageCard = ({item}) => {
           <Feather name="download" size={30} color={'white'} />
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -29,8 +34,6 @@ const styles = StyleSheet.create({
     height: 300,
     width: '50%',
     backgroundColor: 'pink',
-    borderColor: 'black',
-    borderWidth: 1,
     borderRadius: 12,
     overflow: 'hidden',
     marginRight: 8,
@@ -41,8 +44,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
+    bottom: 12,
+    right: 12,
     height: 80,
     justifyContent: 'space-between',
   },
