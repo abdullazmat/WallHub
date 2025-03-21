@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
       <Tab.Navigator
         screenOptions={{
           tabBarShowLabel: false,
@@ -32,6 +32,9 @@ const App = () => {
             borderRadius: 30,
             alignItems: 'center',
             flexDirection: 'row',
+            backgroundColor: 'transparent',
+            elevation: 0,
+            shadowOpacity: 0,
           },
           tabBarBackground: () => {
             return (
