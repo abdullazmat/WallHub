@@ -12,107 +12,114 @@ import CollectionScreen from './src/screens/CollectionScreen';
 import LikeScreen from './src/screens/LikeScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import HomeStack from './src/navigation/MyStackNavigation';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <StatusBar barStyle="light-content" />
-      <Tab.Navigator
-        screenOptions={{
-          tabBarShowLabel: false,
-          headerShown: false,
-          tabBarStyle: {
-            height: 80,
-            position: 'absolute',
-            marginLeft: 20,
-            marginRight: 20,
-            bottom: 40,
-            borderRadius: 30,
-            alignItems: 'center',
-            flexDirection: 'row',
-            backgroundColor: 'transparent',
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          tabBarBackground: () => {
-            return (
-              <LinearGradient
-                colors={['#8C69FF', '#3B3599']}
-                style={{flex: 1, borderRadius: 30}}
-                start={{
-                  x: 0,
-                  y: 0,
-                }}
-                end={{
-                  x: 0,
-                  y: 1,
-                }}
-              />
-            );
-          },
-          tabBarActiveTintColor: 'white',
-          tabBarInactiveTintColor: '#CCCCCC',
-        }}>
-        <Tab.Screen
-          name="HomeStack"
-          component={HomeStack}
-          options={{
-            tabBarIcon: ({color, focused, size}) => {
-              return (
-                <AntDesign name="home" color={color} size={focused ? 30 : 20} />
-              );
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer>
+        <StatusBar barStyle="light-content" />
+        <Tab.Navigator
+          screenOptions={{
+            tabBarShowLabel: false,
+            headerShown: false,
+            tabBarStyle: {
+              height: 80,
+              position: 'absolute',
+              marginLeft: 20,
+              marginRight: 20,
+              bottom: 40,
+              borderRadius: 30,
+              alignItems: 'center',
+              flexDirection: 'row',
+              backgroundColor: 'transparent',
+              elevation: 0,
+              shadowOpacity: 0,
             },
-          }}
-        />
-        <Tab.Screen
-          name="Collections"
-          component={CollectionScreen}
-          options={{
-            tabBarIcon: ({color, focused, size}) => {
+            tabBarBackground: () => {
               return (
-                <FontAwesome5
-                  name="th-large"
-                  color={color}
-                  size={focused ? 30 : 20}
+                <LinearGradient
+                  colors={['#8C69FF', '#3B3599']}
+                  style={{flex: 1, borderRadius: 30}}
+                  start={{
+                    x: 0,
+                    y: 0,
+                  }}
+                  end={{
+                    x: 0,
+                    y: 1,
+                  }}
                 />
               );
             },
-          }}
-        />
-        <Tab.Screen
-          name="Search"
-          component={SearchScreen}
-          options={{
-            tabBarIcon: ({color, focused, size}) => {
-              return (
-                <AntDesign
-                  name="search1"
-                  color={color}
-                  size={focused ? 30 : 20}
-                />
-              );
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Likes"
-          component={LikeScreen}
-          options={{
-            tabBarIcon: ({color, focused, size}) => {
-              return (
-                <AntDesign
-                  name="hearto"
-                  color={color}
-                  size={focused ? 30 : 20}
-                />
-              );
-            },
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+            tabBarActiveTintColor: 'white',
+            tabBarInactiveTintColor: '#CCCCCC',
+          }}>
+          <Tab.Screen
+            name="HomeStack"
+            component={HomeStack}
+            options={{
+              tabBarIcon: ({color, focused, size}) => {
+                return (
+                  <AntDesign
+                    name="home"
+                    color={color}
+                    size={focused ? 30 : 20}
+                  />
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Collections"
+            component={CollectionScreen}
+            options={{
+              tabBarIcon: ({color, focused, size}) => {
+                return (
+                  <FontAwesome5
+                    name="th-large"
+                    color={color}
+                    size={focused ? 30 : 20}
+                  />
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{
+              tabBarIcon: ({color, focused, size}) => {
+                return (
+                  <AntDesign
+                    name="search1"
+                    color={color}
+                    size={focused ? 30 : 20}
+                  />
+                );
+              },
+            }}
+          />
+          <Tab.Screen
+            name="Likes"
+            component={LikeScreen}
+            options={{
+              tabBarIcon: ({color, focused, size}) => {
+                return (
+                  <AntDesign
+                    name="hearto"
+                    color={color}
+                    size={focused ? 30 : 20}
+                  />
+                );
+              },
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 
