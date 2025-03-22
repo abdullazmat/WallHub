@@ -15,17 +15,19 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const WallPaperScreen = () => {
-  const naviagtion = useNavigation();
+  const navigation = useNavigation();
   const route = useRoute();
   const item = route.params.item;
-  console.log(item);
   return (
     <>
       <StatusBar hidden />
-      <ImageBackground style={styles.container} source={{uri: item.image}} />
+      <ImageBackground
+        style={styles.container}
+        source={{uri: item.links.download}}
+      />
       <TouchableOpacity
         style={styles.backIconContainer}
-        onPress={() => naviagtion.goBack()}>
+        onPress={() => navigation.goBack()}>
         <Ionicons name="chevron-back-outline" color={'white'} size={30} />
       </TouchableOpacity>
       <View style={styles.iconContainer}>

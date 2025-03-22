@@ -1,11 +1,16 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Image} from 'react-native';
 
 const CategoryCard = ({item}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('CollectionWallpaperScreen', {item})
+        }>
         <Image
           style={styles.coverImage}
           source={{

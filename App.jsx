@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
@@ -8,10 +7,9 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SearchScreen from './src/screens/SearchScreen';
-import CollectionScreen from './src/screens/CollectionScreen';
 import LikeScreen from './src/screens/LikeScreen';
 import LinearGradient from 'react-native-linear-gradient';
-import HomeStack from './src/navigation/MyStackNavigation';
+import {CollectionStack, HomeStack} from './src/navigation/MyStackNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
@@ -38,6 +36,7 @@ const App = () => {
               elevation: 0,
               shadowOpacity: 0,
             },
+            // eslint-disable-next-line react/no-unstable-nested-components
             tabBarBackground: () => {
               return (
                 <LinearGradient
@@ -74,7 +73,7 @@ const App = () => {
           />
           <Tab.Screen
             name="Collections"
-            component={CollectionScreen}
+            component={CollectionStack}
             options={{
               tabBarIcon: ({color, focused, size}) => {
                 return (

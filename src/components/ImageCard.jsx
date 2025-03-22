@@ -10,11 +10,11 @@ const ImageCard = ({item}) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('WallPaperScreen', {item})}
-      style={styles.container}>
+      style={styles.container(item.color)}>
       <Image
         style={styles.coverImage}
         source={{
-          uri: item.image,
+          uri: item.links.download,
         }}
       />
       <View style={styles.iconContainer}>
@@ -30,15 +30,15 @@ const ImageCard = ({item}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container: color => ({
     height: 300,
     width: '50%',
-    backgroundColor: 'pink',
+    backgroundColor: color,
     borderRadius: 12,
     overflow: 'hidden',
     marginRight: 8,
     marginVertical: 10,
-  },
+  }),
   coverImage: {
     flex: 1,
   },
