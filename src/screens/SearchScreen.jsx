@@ -6,9 +6,11 @@ import {
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {fetchWallpapers} from '../data/images';
 import ImageCard from '../components/ImageCard';
 
@@ -49,12 +51,15 @@ const SearchScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <StatusBar hidden />
-        <View>
+        <View style={styles.searchHeader}>
           <Text style={styles.collectionHeading}>Search </Text>
-          <Text style={styles.collectionText}>
-            Search through infinite number of Wallpapers.
-          </Text>
+          <TouchableOpacity style={styles.backIconContainer}>
+            <Entypo name="cross" color={'white'} size={30} />
+          </TouchableOpacity>
         </View>
+        <Text style={styles.collectionText}>
+          Search through infinite number of Wallpapers.
+        </Text>
         <View style={styles.inputContainer}>
           <AntDesign name="search1" color="white" size={20} />
           <TextInput
@@ -86,8 +91,22 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 50,
     paddingStart: 20,
+    paddingEnd: 20,
     backgroundColor: '#121928',
     flex: 1,
+  },
+  searchHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  backIconContainer: {
+    height: 40,
+    width: 40,
+    backgroundColor: '#414753',
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   collectionHeading: {
     color: 'white',
@@ -103,7 +122,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 20,
     borderColor: '#6d68c4',
     borderWidth: 2,
     borderRadius: 12,

@@ -6,11 +6,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import LikeScreen from './src/screens/LikeScreen';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   CollectionStack,
   HomeStack,
+  LikeStack,
   SearchStack,
 } from './src/navigation/MyStackNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -104,8 +104,8 @@ const App = () => {
             }}
           />
           <Tab.Screen
-            name="Likes"
-            component={LikeScreen}
+            name="LikeStack"
+            component={LikeStack}
             options={{
               tabBarIcon: ({color, focused, size}) => {
                 return (
