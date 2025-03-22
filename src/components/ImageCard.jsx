@@ -1,11 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
 const ImageCard = ({item}) => {
   const navigation = useNavigation();
+  const [liked, setLiked] = useState(false);
 
   return (
     <TouchableOpacity
@@ -18,8 +19,12 @@ const ImageCard = ({item}) => {
         }}
       />
       <View style={styles.iconContainer}>
-        <TouchableOpacity>
-          <AntDesign name="hearto" size={30} color={'white'} />
+        <TouchableOpacity onPress={() => setLiked(!liked)}>
+          <FontAwesome
+            name={liked ? 'heart' : 'heart-o'}
+            size={30}
+            color={liked ? 'red' : 'white'}
+          />
         </TouchableOpacity>
         <TouchableOpacity>
           <Feather name="download" size={30} color={'white'} />

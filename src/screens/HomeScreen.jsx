@@ -11,13 +11,11 @@ const HomeScreen = () => {
 
   const loadImages = async (newPage = 1) => {
     const newImages = await fetchWallpapers(newPage);
-
     if (newPage === 1) {
       imagesRef.current = newImages; // First page
     } else {
       imagesRef.current = [...imagesRef.current, ...newImages]; // Append new images
     }
-
     setImages(imagesRef.current);
   };
 

@@ -6,10 +6,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import SearchScreen from './src/screens/SearchScreen';
 import LikeScreen from './src/screens/LikeScreen';
 import LinearGradient from 'react-native-linear-gradient';
-import {CollectionStack, HomeStack} from './src/navigation/MyStackNavigation';
+import {
+  CollectionStack,
+  HomeStack,
+  SearchStack,
+} from './src/navigation/MyStackNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +39,6 @@ const App = () => {
               elevation: 0,
               shadowOpacity: 0,
             },
-            // eslint-disable-next-line react/no-unstable-nested-components
             tabBarBackground: () => {
               return (
                 <LinearGradient
@@ -88,7 +90,7 @@ const App = () => {
           />
           <Tab.Screen
             name="Search"
-            component={SearchScreen}
+            component={SearchStack}
             options={{
               tabBarIcon: ({color, focused, size}) => {
                 return (

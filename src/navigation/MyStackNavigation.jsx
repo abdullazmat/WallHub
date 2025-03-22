@@ -3,6 +3,7 @@ import HomeScreen from '../screens/HomeScreen';
 import WallPaperScreen from '../screens/WallPaperScreen';
 import CollectionScreen from '../screens/CollectionScreen';
 import CollectionWallpaperScreen from '../screens/CollectionWallpaperScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,15 @@ export function CollectionStack() {
         name="CollectionWallpaperScreen"
         component={CollectionWallpaperScreen}
       />
+      <Stack.Screen name="WallPaperScreen" component={WallPaperScreen} />
+    </Stack.Navigator>
+  );
+}
+
+export function SearchStack() {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="WallPaperScreen" component={WallPaperScreen} />
     </Stack.Navigator>
   );

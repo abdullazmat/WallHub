@@ -18,7 +18,6 @@ export const fetchWallpapers = async (page = 1, query = 'wallpapers') => {
 
     return response.data.results;
   } catch (error) {
-    console.error('Error fetching wallpapers:', error);
     return [];
   }
 };
