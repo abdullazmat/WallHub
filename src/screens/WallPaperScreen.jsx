@@ -16,6 +16,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDownloadFile} from '../hooks/useDownloadFile';
+import Share from 'react-native-share';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 
 const WallPaperScreen = () => {
   const {downloadFile, percentage, downloading} = useDownloadFile();
@@ -76,8 +78,33 @@ const WallPaperScreen = () => {
     await AsyncStorage.setItem('images', JSON.stringify(likedWallpapers));
   };
 
-  const handleDownloadWallpaper = () => {
-    downloadFile(item.urls.raw, item.alt_description);
+  const handleDownloadWallpaper = async () => {
+    await downloadFile(item.urls.raw, item.alt_description);
+  };
+
+  const handleShareWallpaper = () => {
+    try {
+      ReactNativeBlobUtil.fetch('GET', item.urls.regular).then(res => {
+        let status = res.info().status;
+        if (status === 200) {
+          let base64Str = res.base64();
+          let options = {
+            url: `data:image/jpeg;base64,${base64Str}`,
+          };
+          Share.open(options)
+            .then(r => {
+              console.log(r);
+            })
+            .catch(e => {
+              e && console.log(e);
+            });
+        } else {
+          // handle other status codes
+        }
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   return (
@@ -104,10 +131,10 @@ const WallPaperScreen = () => {
             color={!liked ? 'red' : 'white'}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleDownloadWallpaper(item)}>
+        <TouchableOpacity onPress={() => handleDownloadWallpaper()}>
           <Feather name="download" size={30} color={'white'} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleShareWallpaper()}>
           <FontAwesome name="share" size={30} color={'white'} />
         </TouchableOpacity>
       </View>
