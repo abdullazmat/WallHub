@@ -1,13 +1,23 @@
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Image, TouchableOpacity, Alert} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDownloadFile} from '../hooks/useDownloadFile';
+import {Text} from 'react-native-gesture-handler';
 
 const ImageCard = ({item}) => {
   const navigation = useNavigation();
   const [liked, setLiked] = useState(false);
+  const {downloadFile, percentage, downloading} = useDownloadFile();
 
   // Load liked status from AsyncStorage when component mounts
   useFocusEffect(
@@ -58,6 +68,10 @@ const ImageCard = ({item}) => {
     await AsyncStorage.setItem('images', JSON.stringify(likedWallpapers));
   };
 
+  const handleDownloadWallpaper = () => {
+    downloadFile(item.urls.raw, item.alt_description);
+  };
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('WallPaperScreen', {item})}
@@ -71,10 +85,19 @@ const ImageCard = ({item}) => {
             color={liked ? 'red' : 'white'}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleDownloadWallpaper(item)}>
           <Feather name="download" size={30} color={'white'} />
         </TouchableOpacity>
       </View>
+      {/* Show loader while downloading */}
+      {downloading ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator color={'white'} size={'large'} />
+          <Text style={styles.LoaderText}>
+            Progress Percentage {percentage}%
+          </Text>
+        </View>
+      ) : null}
     </TouchableOpacity>
   );
 };
@@ -98,6 +121,16 @@ const styles = StyleSheet.create({
     right: 12,
     height: 80,
     justifyContent: 'space-between',
+  },
+  loaderContainer: {
+    ...StyleSheet.absoluteFillObject, // Covers entire screen
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  LoaderText: {
+    color: 'white',
+    paddingTop: 20,
   },
 });
 

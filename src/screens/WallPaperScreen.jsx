@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,14 +15,15 @@ import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import {useDownloadFile} from '../hooks/useDownloadFile';
 
 const WallPaperScreen = () => {
+  const {downloadFile, percentage, downloading} = useDownloadFile();
   const navigation = useNavigation();
   const route = useRoute();
   const item = route.params.item;
   console.log(item);
   const [liked, setLiked] = useState(false);
-  const isFocused = useIsFocused();
 
   // Load liked status from AsyncStorage when component mounts
   useFocusEffect(
@@ -73,6 +75,11 @@ const WallPaperScreen = () => {
 
     await AsyncStorage.setItem('images', JSON.stringify(likedWallpapers));
   };
+
+  const handleDownloadWallpaper = () => {
+    downloadFile(item.urls.raw, item.alt_description);
+  };
+
   return (
     <>
       <StatusBar hidden />
@@ -80,6 +87,7 @@ const WallPaperScreen = () => {
         style={styles.container}
         source={{uri: item.urls.regular}}
       />
+
       <TouchableOpacity
         style={styles.backIconContainer}
         onPress={() => navigation.goBack()}>
@@ -96,13 +104,22 @@ const WallPaperScreen = () => {
             color={!liked ? 'red' : 'white'}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleDownloadWallpaper(item)}>
           <Feather name="download" size={30} color={'white'} />
         </TouchableOpacity>
         <TouchableOpacity>
           <FontAwesome name="share" size={30} color={'white'} />
         </TouchableOpacity>
       </View>
+      {/* Show loader while downloading */}
+      {downloading ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator color={'white'} size={'large'} />
+          <Text style={styles.LoaderText}>
+            Progress Percentage {percentage}%
+          </Text>
+        </View>
+      ) : null}
     </>
   );
 };
@@ -130,6 +147,16 @@ const styles = StyleSheet.create({
     right: 20,
     height: 140,
     justifyContent: 'space-between',
+  },
+  loaderContainer: {
+    ...StyleSheet.absoluteFillObject, // Covers entire screen
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  LoaderText: {
+    color: 'white',
+    paddingTop: 20,
   },
 });
 export default WallPaperScreen;
