@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -21,6 +21,7 @@ const WallPaperScreen = () => {
   const item = route.params.item;
   console.log(item);
   const [liked, setLiked] = useState(false);
+  const isFocused = useIsFocused();
 
   // Load liked status from AsyncStorage when component mounts
   useFocusEffect(
@@ -29,7 +30,7 @@ const WallPaperScreen = () => {
         let likedWallpapers = await AsyncStorage.getItem('images');
         likedWallpapers = likedWallpapers ? JSON.parse(likedWallpapers) : [];
         const isLiked = likedWallpapers.some(image => image.id === item.id);
-        setLiked(isLiked);
+        setLiked(!isLiked);
       };
       loadLikedStatus();
     }, [item.id]),
@@ -42,7 +43,7 @@ const WallPaperScreen = () => {
     if (isExist < 0) {
       const newItem = {...item, isLiked: true};
       likedWallpapers = [newItem, ...likedWallpapers];
-      setLiked(true);
+      setLiked(!liked);
       Alert.alert(
         'Added to Favorities',
         'Your Wallpaper has been added to favourities',
@@ -90,9 +91,9 @@ const WallPaperScreen = () => {
             handleLikeWallpaper(item);
           }}>
           <FontAwesome
-            name={item.isLiked || liked ? 'heart' : 'heart-o'}
+            name={!liked ? 'heart' : 'heart-o'}
             size={30}
-            color={item.isLiked || liked ? 'red' : 'white'}
+            color={!liked ? 'red' : 'white'}
           />
         </TouchableOpacity>
         <TouchableOpacity>

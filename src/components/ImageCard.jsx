@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Image, TouchableOpacity, Alert} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -10,15 +10,17 @@ const ImageCard = ({item}) => {
   const [liked, setLiked] = useState(false);
 
   // Load liked status from AsyncStorage when component mounts
-  useEffect(() => {
-    const loadLikedStatus = async () => {
-      let likedWallpapers = await AsyncStorage.getItem('images');
-      likedWallpapers = likedWallpapers ? JSON.parse(likedWallpapers) : [];
-      const isLiked = likedWallpapers.some(image => image.id === item.id);
-      setLiked(isLiked);
-    };
-    loadLikedStatus();
-  }, [item.id, liked, item.isLiked]);
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadLikedStatus = async () => {
+        let likedWallpapers = await AsyncStorage.getItem('images');
+        likedWallpapers = likedWallpapers ? JSON.parse(likedWallpapers) : [];
+        const isLiked = likedWallpapers.some(image => image.id === item.id);
+        setLiked(isLiked);
+      };
+      loadLikedStatus();
+    }, [item.id]),
+  );
 
   // Function to handle like/unlike
   const handleLikeWallpaper = async () => {
