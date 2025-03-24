@@ -13,6 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {fetchWallpapers} from '../data/images';
 import ImageCard from '../components/ImageCard';
+import {useDebouncedCallback} from 'use-debounce';
 
 const SearchScreen = () => {
   const [images, setImages] = useState([]);
@@ -24,6 +25,11 @@ const SearchScreen = () => {
   useEffect(() => {
     loadImages(1, query);
   }, [query]);
+
+  // Delay
+  const debounced = useDebouncedCallback(query => {
+    setQuery(query);
+  }, 500);
 
   const loadImages = async (newPage = 1, query) => {
     const newImages = await fetchWallpapers(newPage, query);
@@ -67,7 +73,7 @@ const SearchScreen = () => {
             placeholderTextColor={'white'}
             style={styles.inputText}
             focusable={true}
-            onChangeText={text => setQuery(text)}
+            onChangeText={text => debounced(text)}
           />
         </View>
         <FlatList
